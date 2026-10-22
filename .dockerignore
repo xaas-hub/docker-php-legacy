@@ -1,0 +1,9 @@
+# Only Dockerfile, rootfs/ and the build inputs (build/, patches/,
+# versions.json) make up the image: everything else stays out of the build
+# context.
+*
+!Dockerfile
+!build/
+!patches/
+!rootfs/
+!versions.json

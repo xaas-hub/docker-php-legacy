@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# freetype-config for the gd build of PHP < 7.4, which looks for it in
+# /usr/local/bin or /usr/bin: FreeType only ships its pkg-config file.
+
+set -euo pipefail
+
+case "${1:-}" in
+--cflags) exec pkg-config --cflags freetype2 ;;
+--libs) exec pkg-config --libs freetype2 ;;
+--prefix) exec pkg-config --variable=prefix freetype2 ;;
+--version | --ftversion) exec pkg-config --modversion freetype2 ;;
+*)
+	echo "freetype-config: unsupported option '${1:-}'" >&2
+	exit 1
+	;;
+esac

@@ -1,0 +1,37 @@
+# Local use:
+#
+#   docker run --rm -v $(pwd):/tmp/lint oxsecurity/megalinter --fix
+#
+# The set of linters mirrors what ci.yml enforces (hadolint, shellcheck), plus
+# the checks that are impractical to run there. Deliberately no extra arguments
+# for hadolint and shellcheck: any divergence from ci.yml would mean the local
+# run and the pipeline disagree.
+APPLY_FIXES: all
+SHOW_ELAPSED_TIME: true
+FLAVOR_SUGGESTIONS: false
+PRINT_ALPACA: false
+DEFAULT_BRANCH: main
+
+# Explicit allow-list: only these run, nothing else is auto-detected.
+ENABLE_LINTERS:
+  - BASH_SHELLCHECK
+  - DOCKERFILE_HADOLINT
+  - ACTION_ACTIONLINT
+  - MARKDOWN_MARKDOWNLINT
+  - YAML_YAMLLINT
+  - JSON_JSONLINT
+  - REPOSITORY_SECRETLINT
+
+# The scripts under rootfs/usr/local/bin and build/compat have no extension, so
+# the .sh matching of the BASH descriptor misses them.
+BASH_SHELLCHECK_FILE_NAMES_REGEX:
+  - "docker-php-init"
+  - "docker-php-locales"
+  - "php-fpm-healthcheck"
+  - "freetype-config"
+  - ".*\\.sh$"
+
+EXCLUDED_DIRECTORIES:
+  - .git
+  - html
+  - megalinter-reports

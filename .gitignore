@@ -1,0 +1,26 @@
+# Environment
+.env*
+!.env.dist
+
+# Repo
+*.code-workspace
+# Maintainer's private notes for agents, kept in a separate repository
+agents/
+# Document root of the local compose stack
+html/
+
+# Tools
+.ctxsync*
+.claude*
+venv/
+
+# Linter
+megalinter-reports/
+*.cache
+core.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

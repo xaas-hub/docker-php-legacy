@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# Healthcheck of the fpm images: asks the pool for its ping page over FastCGI,
+# at the address FPM_POOL_LISTEN sets (9000 by default, like the official
+# image).
+
+set -euo pipefail
+
+listen="${FPM_POOL_LISTEN:-9000}"
+case "$listen" in
+/*) address="$listen" ;;
+*:*) address="127.0.0.1:${listen##*:}" ;;
+*) address="127.0.0.1:${listen}" ;;
+esac
+
+response="$(SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect "$address")"
+grep -q pong <<<"$response"

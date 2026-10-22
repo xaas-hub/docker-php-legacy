@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# Entry point of the image. Prepares the container from its environment, runs
+# the user hooks in /docker-entrypoint.d/, then hands over to the official
+# docker-php-entrypoint, which turns "-F" into "php-fpm -F" and so on.
+#
+# Every step is idempotent: a restarted container goes through all of them
+# again, with whatever the environment says now.
+
+set -Eeuo pipefail
+# Without it a failure inside $(...) does not stop the subshell, and the steps
+# build their files through command substitutions.
+shopt -s inherit_errexit
+
+readonly DOCKER_PHP_LIB=/usr/local/lib/docker-php
+
+# shellcheck source=rootfs/usr/local/lib/docker-php/common.sh
+. "${DOCKER_PHP_LIB}/common.sh"
+
+for step in "${DOCKER_PHP_LIB}"/init.d/*.sh; do
+	# shellcheck source=/dev/null
+	. "$step"
+done
+
+# Sourced rather than executed, like the steps above, so that a hook can
+# export variables for the command that follows.
+for hook in /docker-entrypoint.d/*.sh; do
+	[ -e "$hook" ] || continue
+	log "running ${hook}"
+	# shellcheck source=/dev/null
+	. "$hook"
+done
+
+if is_root && [ -n "${EXEC_USER:-}" ] && [ "${EXEC_USER}" != root ]; then
+	HOME="$(getent passwd "$EXEC_USER" | cut -d: -f6)" \
+		exec setpriv --reuid="$EXEC_USER" --regid="$EXEC_USER" --init-groups -- docker-php-entrypoint "$@"
+fi
+
+exec docker-php-entrypoint "$@"

@@ -1,0 +1,45 @@
+# Local stack to try the image and test a build: PHP-FPM with mail caught by
+# Mailpit. Not a production template, see the README for those.
+#
+#   cp .env.dist .env
+#   IMAGE=php:local docker compose build
+#   IMAGE=php:local docker compose up -d
+#   docker compose exec -u www-data php wp --info
+
+services:
+  php:
+    image: ${IMAGE:-frugan/php-legacy:7.4-fpm}
+    # `image` is both the pull reference and the build tag for the section
+    # below, so a local build has to be tagged the way it will be run:
+    # building with IMAGE unset overwrites the published tag in the local
+    # cache, and nothing will pull it again until that tag is removed.
+    build:
+      context: .
+      target: ${TARGET:-fpm}
+      args:
+        PHP_VERSION: ${PHP_VERSION:-7.4}
+        PHP_VARIANT: ${PHP_VARIANT:-fpm}
+    pull_policy: missing
+    # Reaps Supercronic and anything else started next to FPM.
+    init: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      APP_ENV: ${APP_ENV:-develop}
+      USER_ID: ${USER_ID:-}
+      GROUP_ID: ${GROUP_ID:-}
+      PHP_EXTENSIONS: ${PHP_EXTENSIONS:-}
+      MSMTP_HOST: mailpit
+      MSMTP_PORT: 1025
+      MSMTP_TLS: "off"
+    volumes:
+      - ./html:/var/www/html
+
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "${MAILPIT_HTTP_PORT:-8025}:8025"

@@ -1,0 +1,65 @@
+{
+  "5.6": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-5.6-security-backports-openssl11",
+      "commit": "5c2cc46b45cf286666671df14edf25fc23676cd8"
+    },
+    "patch": "php-5.6-enhanced-remicollet.patch",
+    "openssl": "1.1"
+  },
+  "7.1": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-7.1-security-backports",
+      "commit": "58c39c2f8402261fd4e8ffd327c37adc53a9c861"
+    },
+    "patch": "php-7.1-enhanced-remicollet.patch",
+    "openssl": "1.1"
+  },
+  "7.2": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-7.2-Security-backports",
+      "commit": "eb973820544967c44c6ef7de8500be9af160e153"
+    },
+    "patch": "php-7.2-enhanced-remicollet.patch",
+    "openssl": "1.1"
+  },
+  "7.3": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-7.3-security-backports",
+      "commit": "f9e099c02fc0d8c37bd538eeaf48f4e0f3671d91"
+    },
+    "patch": "php-7.3-enhanced-remicollet.patch",
+    "openssl": "1.1"
+  },
+  "7.4": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-7.4-security-backports",
+      "commit": "802c21075308066362aab4993478dcd0577993a6"
+    },
+    "patch": null,
+    "openssl": "1.1"
+  },
+  "8.0": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-8.0-security-backports",
+      "commit": "d5f09f67ce5082827640eb132978b4975219cb49"
+    },
+    "patch": null,
+    "openssl": "1.1"
+  },
+  "8.1": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-8.1-security-backports",
+      "commit": "1e06d14cdc77d28b88d2daa99bdfdd4dfaae831b"
+    },
+    "patch": null,
+    "openssl": "system"
+  }
+}

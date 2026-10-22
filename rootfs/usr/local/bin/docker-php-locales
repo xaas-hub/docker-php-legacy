@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+#
+# Generates locales.
+#
+#   docker-php-locales all
+#   docker-php-locales "it_IT.UTF-8, de_DE.UTF-8"
+#   docker-php-locales "it_IT.UTF-8 UTF-8; en_US ISO-8859-1"
+#
+# Items are separated by commas or semicolons and are either a locale name or a
+# full line of /usr/share/i18n/SUPPORTED. Used by docker-php-init for LOCALES
+# and by the Dockerfile for the LOCALES build argument.
+
+set -Eeuo pipefail
+
+readonly SUPPORTED=/usr/share/i18n/SUPPORTED
+readonly LOCALE_GEN=/etc/locale.gen
+readonly ARCHIVE=/usr/lib/locale/locale-archive
+
+die() {
+	printf 'docker-php-locales: %s\n' "$*" >&2
+	exit 1
+}
+
+spec="$*"
+[ -n "$spec" ] || die "no locale given"
+
+changed=0
+
+if [ "${spec,,}" = all ]; then
+	if ! cmp -s "$SUPPORTED" "$LOCALE_GEN"; then
+		cp "$SUPPORTED" "$LOCALE_GEN"
+		changed=1
+	fi
+else
+	while IFS= read -r item; do
+		item="${item#"${item%%[![:space:]]*}"}"
+		item="${item%"${item##*[![:space:]]}"}"
+		[ -n "$item" ] || continue
+		name="${item%% *}"
+		# A name alone resolves to its first SUPPORTED line, which is the
+		# charset a bare "it_IT.UTF-8" means anyway.
+		if [ "$name" = "$item" ]; then
+			line="$(awk -v n="$name" '$1 == n { print; exit }' "$SUPPORTED")"
+		else
+			line="$(awk -v l="$item" '$0 == l { print; exit }' "$SUPPORTED")"
+		fi
+		[ -n "$line" ] || die "unsupported locale: ${item} (see ${SUPPORTED})"
+		if ! grep -qxF "$line" "$LOCALE_GEN"; then
+			printf '%s\n' "$line" >>"$LOCALE_GEN"
+			changed=1
+		fi
+	done < <(tr ',;' '\n' <<<"$spec")
+fi
+
+# locale-gen rebuilds every locale listed, which takes about a second each: run
+# it only when the list changed, or when nothing was ever generated.
+if [ "$changed" = 1 ] || [ ! -e "$ARCHIVE" ]; then
+	locale-gen
+fi
