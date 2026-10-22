@@ -138,6 +138,8 @@ ARG SUPERCRONIC_SHA256_ARM64=4ae22576a78223d8ccdf5f3b3660a5cbb5288416bf0ca96afc4
 ARG WP_CLI_VERSION=2.12.0
 ARG WP_CLI_SHA512=be928f6b8ca1e8dfb9d2f4b75a13aa4aee0896f8a9a0a1c45cd5d2c98605e6172e6d014dda2e27f88c98befc16c040cbb2bd1bfa121510ea5cdf5f6a30fe8832
 ARG WP_CLI_PROFILE_VERSION=2.1.5
+# The last one that still runs on PHP < 7.2.24: 2.1.5 raised the requirement.
+ARG WP_CLI_PROFILE_VERSION_LEGACY=2.1.4
 
 # Locales generated at build time, same syntax as the LOCALES variable. The
 # only way to have extra locales in a rootless container.
@@ -237,8 +239,12 @@ RUN --mount=type=secret,id=github_token,required=false \
         COMPOSER_AUTH="$(printf '{"http-basic":{"github.com":{"username":"%s","password":"x-oauth-basic"}}}' "$(cat /run/secrets/github_token)")"; \
         export COMPOSER_AUTH; \
     fi \
+    && profile_version="${WP_CLI_PROFILE_VERSION}" \
+    && if php -r 'exit(PHP_VERSION_ID < 70224 ? 0 : 1);'; then \
+        profile_version="${WP_CLI_PROFILE_VERSION_LEGACY}"; \
+    fi \
     && php -d memory_limit=512M /usr/local/bin/wp package install \
-        "wp-cli/profile-command:${WP_CLI_PROFILE_VERSION}" --allow-root \
+        "wp-cli/profile-command:${profile_version}" --allow-root \
     && rm -rf /root/.wp-cli /root/.composer
 
 COPY rootfs/ /
