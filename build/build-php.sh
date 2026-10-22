@@ -15,6 +15,8 @@
 set -Eeuo pipefail
 
 readonly OPENSSL_PREFIX=/usr/local/openssl
+# Kept in step with the Dockerfile, which marks it as manually installed.
+readonly OPENSSL_PACKAGE=openssl1.1-local
 
 die() {
 	printf 'build-php: %s\n' "$*" >&2
@@ -79,6 +81,28 @@ build_openssl() {
 	ln -s /etc/ssl/certs/ca-certificates.crt "${OPENSSL_PREFIX}/ssl/cert.pem"
 	echo "${OPENSSL_PREFIX}/${libdir}" >/etc/ld.so.conf.d/openssl-1.1.conf
 	ldconfig
+	register_openssl
+}
+
+# install-php-extensions reads the OpenSSL version PHP was built with and asks
+# apt for the matching runtime package, libssl1.1, which bookworm does not
+# have. An empty package that provides it tells apt that it is there.
+register_openssl() {
+	local dir
+
+	dir="$(mktemp -d)"
+	mkdir "${dir}/DEBIAN"
+	cat >"${dir}/DEBIAN/control" <<EOF
+Package: ${OPENSSL_PACKAGE}
+Version: ${OPENSSL_VERSION}-1
+Architecture: $(dpkg --print-architecture)
+Maintainer: docker-php-legacy <dev@frugan.it>
+Provides: libssl1.1
+Description: OpenSSL ${OPENSSL_VERSION} in ${OPENSSL_PREFIX}, built for PHP
+EOF
+	dpkg-deb --build --root-owner-group "$dir" "${dir}.deb"
+	dpkg -i "${dir}.deb"
+	rm -rf "$dir" "${dir}.deb"
 }
 
 # Leaves /usr/src/php.tar.xz, the layout docker-php-source expects: a top

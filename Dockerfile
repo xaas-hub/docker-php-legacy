@@ -102,6 +102,8 @@ RUN --mount=type=bind,source=versions.json,target=/usr/src/legacy/versions.json 
     /usr/src/legacy/build-php.sh build /usr/src/legacy; \
     apt-mark auto '.*' > /dev/null; \
     [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
+# the package build-php.sh registers for its OpenSSL 1.1, before 8.1
+    if dpkg-query -W openssl1.1-local > /dev/null 2>&1; then apt-mark manual openssl1.1-local; fi; \
     find /usr/local -type f -executable -exec ldd '{}' ';' \
         | awk '/=>/ { so = $(NF-1); if (index(so, "/usr/local/") == 1) { next }; gsub("^/(usr/)?", "", so); printf "*%s\n", so }' \
         | sort -u \
