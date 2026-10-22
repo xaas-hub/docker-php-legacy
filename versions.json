@@ -6,6 +6,9 @@
       "commit": "5c2cc46b45cf286666671df14edf25fc23676cd8"
     },
     "patch": "php-5.6-enhanced-remicollet.patch",
+    "compat": [
+      "php-src-d6d4f2a-aarch64-multiply.patch"
+    ],
     "openssl": "1.1"
   },
   "7.1": {

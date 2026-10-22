@@ -12,9 +12,11 @@ for these branches.
 ## Hard rules
 
 - **No PHP code of our own.** PHP comes from the commit pinned in
-  `versions.json`, plus at most one file from `patches/`. A fix that is not
-  in Remi Collet's security tree or in Anton-Barinov/php2shell-patches does
-  not belong here: say so instead of writing it.
+  `versions.json`, plus at most one file from `patches/` and the php-src
+  commits listed under `compat`, which `patches/compat/` holds as
+  `git format-patch` output. A fix that is not in Remi Collet's security
+  tree, in Anton-Barinov/php2shell-patches or in php-src does not belong
+  here: say so instead of writing it.
 - **`patches/` are verbatim copies** of Anton-Barinov/php2shell-patches, at
   the commit named in the README. Never edit one: update it from upstream, and
   check that it still applies with `--fuzz=0`.

@@ -8,6 +8,7 @@ Thank you for your interest in contributing!
 ├── Dockerfile                  # Compiles PHP, then targets cli, cli-dev, fpm, fpm-dev
 ├── versions.json               # Per PHP branch: source commit, patch, OpenSSL
 ├── patches/                    # Verbatim copies from Anton-Barinov/php2shell-patches
+│   └── compat/                 # php-src commits a branch never received, for today's toolchains
 ├── build/
 │   ├── build-php.sh            # Fetches, patches and compiles PHP like docker-library/php
 │   ├── compat/                 # Tools the old configure scripts expect and Debian no longer ships

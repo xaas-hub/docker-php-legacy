@@ -49,6 +49,9 @@ on Debian bookworm. The source of each branch is pinned by commit in
   community backports of the fix, for the branches that have no official one.
   [`patches/`](patches) holds verbatim copies, as of commit `20bbe5f`. They are
   not reviewed by the PHP Group.
+- **php-src commits a branch never received**, in
+  [`patches/compat/`](patches/compat), only where today's compilers need them:
+  5.6 gets the arm64 fix of `ZEND_SIGNED_MULTIPLY_LONG` that 7.0 got in 2016.
 - **7.0 is not built.** The only patch for it targets the 7.0.33 release,
   which lacks every fix since December 2018, and as of `20bbe5f` it crashes
   PHP when memory runs out: `zend_alloc.c` calls `zend_get_executed_filename_ex()`

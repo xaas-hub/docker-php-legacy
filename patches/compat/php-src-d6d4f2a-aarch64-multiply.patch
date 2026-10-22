@@ -1,0 +1,32 @@
+From d6d4f2a9b38cd7fa7e938142e49e5a514d612e52 Mon Sep 17 00:00:00 2001
+From: Andy Postnikov <apostnikov@gmail.com>
+Date: Sat, 10 Dec 2016 23:51:17 +0300
+Subject: [PATCH] Fix ZEND_SIGNED_MULTIPLY_LONG for AArch64
+
+Register operands are required in this context.
+
+This is a backport of 8c8679207ae5ada8751288e75b78c928a4d34d1d
+to PHP 7.0+. The current code caused incorrect behavior on AArch64
+when compiling with clang.
+---
+ Zend/zend_multiply.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Zend/zend_multiply.h b/Zend/zend_multiply.h
+index e156d33a1..c66e19248 100644
+--- a/Zend/zend_multiply.h
++++ b/Zend/zend_multiply.h
+@@ -53,8 +53,8 @@
+ 	__asm__("mul %0, %2, %3\n"										\
+ 		"smulh %1, %2, %3\n"										\
+ 		"sub %1, %1, %0, asr #63\n"									\
+-			: "=X"(__tmpvar), "=X"(usedval)							\
+-			: "X"(a), "X"(b));										\
++			: "=&r"(__tmpvar), "=&r"(usedval)						\
++			: "r"(a), "r"(b));										\
+ 	if (usedval) (dval) = (double) (a) * (double) (b);				\
+ 	else (lval) = __tmpvar;											\
+ } while (0)
+-- 
+2.43.0
+
