@@ -143,8 +143,10 @@ expect "PHP_INI_* sets directives" "321M 1" \
 expect_failure "PHP_INI_* rejects double quotes" -e 'PHP_INI_MEMORY_LIMIT=1"x' -- php -v
 expect "sendmail_path points to msmtp" "/usr/bin/msmtp -t" \
 	"$(run -- php -r 'echo ini_get("sendmail_path");')"
-expect "expose_php is off" "bool(false)" \
-	"$(run -- php -r 'var_dump((bool) ini_get("expose_php"));' | tr -d '\n')"
+# var_export, not var_dump: Xdebug 2 (the -dev images before 7.2) prefixes
+# var_dump output with the file and line.
+expect "expose_php is off" "false" \
+	"$(run -- php -r 'var_export((bool) ini_get("expose_php"));')"
 
 user_ini='echo ini_get("user_ini.filename"), "|", ini_get("user_ini.cache_ttl");'
 expect "production keeps .user.ini" ".user.ini|300" "$(run -- php -r "$user_ini")"
@@ -188,8 +190,8 @@ grep -Eq 'tls_starttls *= *on' <<<"$pretend" || fail "msmtp does not default to 
 pass "MSMTP_* generates a configuration www-data can read"
 expect "msmtprc is private to root and www-data" "root:www-data 640" \
 	"$(run "${msmtp_env[@]}" -e EXEC_USER= -- stat -Lc '%U:%G %a' /etc/msmtprc)"
-expect "MSMTP_PASSWORD does not reach PHP" "bool(false)" \
-	"$(run "${msmtp_env[@]}" -- php -r 'var_dump(getenv("MSMTP_PASSWORD"));' | tr -d '\n')"
+expect "MSMTP_PASSWORD does not reach PHP" "false" \
+	"$(run "${msmtp_env[@]}" -- php -r 'var_export(getenv("MSMTP_PASSWORD"));')"
 
 # --- Locales -------------------------------------------------------------------
 
