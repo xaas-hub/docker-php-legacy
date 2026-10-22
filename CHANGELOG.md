@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1](https://github.com/xaas-hub/docker-php-legacy/compare/v0.1.0...v0.1.1) (2026-10-22)
+
+### Bug Fixes
+
+* **build:** provide libssl1.1 for install-php-extensions on PHP < 8.1 ([174ee0b](https://github.com/xaas-hub/docker-php-legacy/commit/174ee0be63ddb49ae288d396b962973a55e59b46))
+
 ## [0.1.0](https://github.com/xaas-hub/docker-php-legacy/compare/v0.0.0...v0.1.0) (2026-10-22)
 
 ### Features
