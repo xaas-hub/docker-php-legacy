@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0](https://github.com/xaas-hub/docker-php-legacy/compare/v0.1.4...v0.2.0) (2026-10-23)
+
+### Features
+
+* add the optional extensions of docker-php, plus mcrypt ([adf8b79](https://github.com/xaas-hub/docker-php-legacy/commit/adf8b79b37c93db299724c5001a20f61fffbd337))
+
+### Bug Fixes
+
+* **php:** turn session upload progress off by default ([e4e2766](https://github.com/xaas-hub/docker-php-legacy/commit/e4e2766ead1c8612580fdb89ea18d4d59f71559b))
+
 ## [0.1.4](https://github.com/xaas-hub/docker-php-legacy/compare/v0.1.3...v0.1.4) (2026-10-22)
 
 ### Bug Fixes
