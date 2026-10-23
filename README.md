@@ -47,16 +47,18 @@ on Debian bookworm. The source of each branch is pinned by commit in
   life.
 - **[Anton-Barinov/php2shell-patches](https://github.com/Anton-Barinov/php2shell-patches)**:
   community backports of the fix, for the branches that have no official one.
-  [`patches/`](patches) holds verbatim copies, as of commit `20bbe5f`. They are
-  not reviewed by the PHP Group.
+  [`patches/`](patches) holds verbatim copies, as of commit `41fa62f`. They are
+  not reviewed by the PHP Group. Its patches for Remi's 7.4, 8.0 and 8.1 trees
+  are not used: they replace the official fix to bring the session upload
+  progress back, which CVE-2026-115560 wants off anyway.
 - **php-src commits a branch never received**, in
   [`patches/compat/`](patches/compat), only where today's compilers need them:
   5.6 gets the arm64 fix of `ZEND_SIGNED_MULTIPLY_LONG` that 7.0 got in 2016.
-- **7.0 is not built.** The only patch for it targets the 7.0.33 release,
-  which lacks every fix since December 2018, and as of `20bbe5f` it crashes
-  PHP when memory runs out: `zend_alloc.c` calls `zend_get_executed_filename_ex()`
-  without including `zend_execute.h`, so the pointer it returns is truncated.
-  It comes back once a patch for Remi's 7.0 tree exists.
+- **7.0 is not built.** The patch for the 7.0.33 release lacks every fix
+  since December 2018. The one for Remi's 7.0 tree, as of `41fa62f`, does not
+  build there: it removes the `max_multipart_body_parts` entry from
+  `main/main.c` and adds to `main/rfc1867.c` a second copy of the code that
+  reads it, both already in the tree. 7.0 comes back once that patch builds.
 - **OpenSSL 1.1.1w**: ext/openssl only builds against OpenSSL 3 from PHP 8.1,
   so the older branches link an OpenSSL 1.1.1w built here, which no longer
   gets public fixes either. The rest of the system (curl, libpq) uses Debian's
