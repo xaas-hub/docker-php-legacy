@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1](https://github.com/xaas-hub/docker-php-legacy/compare/v0.2.0...v0.2.1) (2026-10-23)
+
+### Documentation
+
+* **readme:** update the php2shell-patches notes to 41fa62f ([4a39d4d](https://github.com/xaas-hub/docker-php-legacy/commit/4a39d4d560c4805c3110fd619e7b6dce6cd5406b))
+
 ## [0.2.0](https://github.com/xaas-hub/docker-php-legacy/compare/v0.1.4...v0.2.0) (2026-10-23)
 
 ### Features
