@@ -72,7 +72,8 @@ instead of unwinding the request:
   the application. The web server answers 502, and FPM starts a new worker.
 - on 7.4, 8.0 and 8.1 the official fix turns the session upload progress off
   (`session.upload_progress.enabled` has no effect); on the other branches the
-  community patch fixes it and keeps it working.
+  community patch fixes it and keeps it working, but the image turns it off by
+  default against CVE-2026-115560, which no patch fixes yet.
 
 Raise `memory_limit` where a site used to hit it.
 
@@ -98,7 +99,10 @@ redis, soap, sockets, tidy, xsl, each in the last release that supports the
 branch. The `-dev` images add Xdebug: 3.x, loaded with `XDEBUG_MODE=off`,
 from 7.2 on; 2.x before, where `XDEBUG_MODE` has no effect.
 
-`php.ini` is `php.ini-production`, with `expose_php = Off`.
+`php.ini` is `php.ini-production`, with `expose_php = Off` and
+`session.upload_progress.enabled = Off` (a mitigation PHP recommends for
+CVE-2026-115560 and CVE-2026-109619; `PHP_INI_SESSION__UPLOAD_PROGRESS__ENABLED=1`
+turns it back on before 7.4).
 
 ## Available tags
 
