@@ -92,9 +92,10 @@ zip, plus sodium from 7.2 on, intl from 7.4 on, and those every build of PHP
 has. intl is missing before 7.4 because its sources do not build against the
 ICU of bookworm.
 
-Optional, enabled with `PHP_EXTENSIONS`: apcu, igbinary, imagick, memcached,
-msgpack, pdo_pgsql, pgsql, redis, soap, each in the last release that supports
-the branch. The `-dev` images add Xdebug: 3.x, loaded with `XDEBUG_MODE=off`,
+Optional, enabled with `PHP_EXTENSIONS`: apcu, bz2, calendar, gettext, gmp,
+igbinary, imagick, ldap, mcrypt, memcached, msgpack, pcntl, pdo_pgsql, pgsql,
+redis, soap, sockets, tidy, xsl, each in the last release that supports the
+branch. The `-dev` images add Xdebug: 3.x, loaded with `XDEBUG_MODE=off`,
 from 7.2 on; 2.x before, where `XDEBUG_MODE` has no effect.
 
 `php.ini` is `php.ini-production`, with `expose_php = Off`.
