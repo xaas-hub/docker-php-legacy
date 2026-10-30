@@ -311,6 +311,26 @@ image is the cleaner setup:
       - ./crontab:/etc/crontab:ro
 ```
 
+To reload the crontab after editing it, send `SIGUSR2` to Supercronic: it
+rereads the file once the running jobs finish. In the separate container
+above, the init forwards the signal:
+
+```sh
+docker kill --signal=USR2 <container>
+```
+
+With `SUPERCRONIC_ENABLED` the same command reaches PHP-FPM instead, which
+takes `SIGUSR2` as a reload of its own, so signal Supercronic directly:
+
+```sh
+docker exec <container> pkill -USR2 -x supercronic
+```
+
+`-inotify` in `SUPERCRONIC_FLAGS` reloads on every change, with no signal.
+Either way, a crontab bind-mounted as a single file stops following the host
+once an editor or an SFTP client saves it by writing a new file and renaming
+it over the old one: mount its directory instead.
+
 ### Locales
 
 | Variable  |                                                                  |

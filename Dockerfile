@@ -156,6 +156,7 @@ ENV WP_CLI_PACKAGES_DIR=/usr/local/share/wp-cli/packages
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # libfcgi-bin: cgi-fcgi for the FPM healthcheck.
+# procps: pkill, to signal Supercronic next to PHP-FPM.
 # util-linux: setpriv, to drop privileges without gosu.
 # hadolint ignore=DL3008
 RUN apt-get update \
@@ -169,6 +170,7 @@ RUN apt-get update \
         msmtp \
         ncurses-bin \
         patch \
+        procps \
         tzdata \
         unzip \
         util-linux \
