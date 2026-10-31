@@ -3,7 +3,7 @@
 # SUPERCRONIC_ENABLED: runs Supercronic in the background, as www-data, next to
 # the main command. Nothing restarts it if it dies, so give the container
 # `init: true` to reap it, or rather run the cli image as a separate cron
-# container: `command: supercronic /etc/crontab`.
+# container: `command: supercronic /etc/supercronic/crontab`.
 
 if is_true "${SUPERCRONIC_ENABLED:-}"; then
 	supercronic_crontab="${SUPERCRONIC_CRONTAB:-/etc/crontab}"

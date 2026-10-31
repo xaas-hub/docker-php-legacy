@@ -291,7 +291,7 @@ is removed from the environment before PHP starts.
 | Variable              | Default        |                                          |
 | --------------------- | -------------- | ---------------------------------------- |
 | `SUPERCRONIC_ENABLED` |                | start Supercronic next to the command    |
-| `SUPERCRONIC_CRONTAB` | `/etc/crontab` |                                          |
+| `SUPERCRONIC_CRONTAB` | `/etc/crontab` | read with `SUPERCRONIC_ENABLED`          |
 | `SUPERCRONIC_FLAGS`   |                | e.g. `-json`, `-split-logs`, `-overlapping` |
 
 Jobs run as `www-data`. As in frugan/php, a separate container from the cli
@@ -302,13 +302,13 @@ image is the cleaner setup:
     image: frugan/php-legacy:7.4-cli
     init: true
     restart: unless-stopped
-    command: ["supercronic", "/etc/crontab"]
+    command: ["supercronic", "/etc/supercronic/crontab"]
     environment:
       USER_ID: 1000
       GROUP_ID: 1000
     volumes:
       - ./html:/var/www/html
-      - ./crontab:/etc/crontab:ro
+      - ./cron:/etc/supercronic:ro
 ```
 
 To reload the crontab after editing it, send `SIGUSR2` to Supercronic: it
@@ -327,9 +327,24 @@ docker exec <container> pkill -USR2 -x supercronic
 ```
 
 `-inotify` in `SUPERCRONIC_FLAGS` reloads on every change, with no signal.
-Either way, a crontab bind-mounted as a single file stops following the host
-once an editor or an SFTP client saves it by writing a new file and renaming
-it over the old one: mount its directory instead.
+It exits if the file is missing when the change arrives, as with an editor
+that deletes the crontab before writing the new one.
+
+Mount the directory that holds the crontab, not the file. A file bind mount
+stays on the original file: once an editor or an SFTP client saves by writing
+a new file and renaming it over the old one, the container goes on reading
+the old one, and neither the signal nor `-inotify` sees the change. That is
+why the example above mounts `./cron`. With `SUPERCRONIC_ENABLED`, when the
+crontab already sits in a mounted directory, point `SUPERCRONIC_CRONTAB` at
+it instead of mounting it again:
+
+```yaml
+    environment:
+      SUPERCRONIC_ENABLED: "true"
+      SUPERCRONIC_CRONTAB: /var/www/conf/crontab
+    volumes:
+      - ./www:/var/www
+```
 
 ### Locales
 
