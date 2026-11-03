@@ -250,6 +250,19 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+  checks:
+    name: checks
+    needs: [lint, plan, build]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      # The only status the "Required Checks" ruleset asks for, with lint: the
+      # build matrix reports one check per branch, variant and platform, which
+      # changes with versions.json. Renaming this job means updating the ruleset.
+      - name: Fail unless every needed job succeeded or was skipped
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1
+
   publish:
     name: publish ${{ matrix.php }}-${{ matrix.variant }}
     needs: [plan, build]
