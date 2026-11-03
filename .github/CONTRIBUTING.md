@@ -27,9 +27,11 @@ Thank you for your interest in contributing!
 │   └── smoke.sh                # End-to-end check of a built image, no network needed
 ├── docker-compose.yml          # Local stack: FPM + Mailpit
 ├── .github/
+│   ├── rulesets/               # Branch rulesets, applied by setup-repo.sh
 │   ├── scripts/
 │   │   ├── plan.sh             # What ci.yml builds and whether it publishes
-│   │   └── publish.sh          # Joins the per-platform digests into tags
+│   │   ├── publish.sh          # Joins the per-platform digests into tags
+│   │   └── setup-repo.sh       # Labels, merge settings and rulesets on GitHub
 │   └── workflows/
 │       ├── ci.yml              # Lint, build, smoke test, publish, scheduled rebuilds
 │       ├── release.yml         # Semantic release, then ci.yml for the versioned tags
