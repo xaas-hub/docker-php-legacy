@@ -33,24 +33,24 @@ on Debian bookworm. The source of each branch is pinned by commit in
 | 8.1 | Remi Collet's security tree               | official, in the tree                           | disabled        | 3       |
 | 8.0 | Remi Collet's security tree               | official, in the tree                           | disabled        | 1.1.1w  |
 | 7.4 | Remi Collet's security tree               | official, in the tree                           | disabled        | 1.1.1w  |
-| 7.3 | Remi Collet's security tree               | community patch (`enhanced-remicollet`)         | works           | 1.1.1w  |
-| 7.2 | Remi Collet's security tree               | community patch (`enhanced-remicollet`)         | works           | 1.1.1w  |
+| 7.3 | Remi Collet's security tree               | official, in the tree                           | disabled        | 1.1.1w  |
+| 7.2 | Remi Collet's security tree               | official, in the tree                           | disabled        | 1.1.1w  |
 | 7.1 | Remi Collet's security tree               | community patch (`enhanced-remicollet`)         | works           | 1.1.1w  |
 | 5.6 | Remi Collet's security tree (OpenSSL 1.1) | community patch (`enhanced-remicollet`)         | works           | 1.1.1w  |
 
 - **[remicollet/php-src-security](https://github.com/remicollet/php-src-security)**:
   the branches Remi Collet maintains for his RPM repository, with the security
   fixes of the supported branches backported to the end-of-life ones. For
-  7.4, 8.0 and 8.1 it already contains the php2shell fix by Arnaud Le Blanc,
+  7.2 to 8.1 it already contains the php2shell fix by Arnaud Le Blanc,
   the one of php-src's `PHP-*-CVE-2026-109618-109619` branches, adapted to the
   tree: those branches lack every other fix since the branch went end of
   life.
 - **[Anton-Barinov/php2shell-patches](https://github.com/Anton-Barinov/php2shell-patches)**:
   community backports of the fix, for the branches that have no official one.
   [`patches/`](patches) holds verbatim copies, as of commit `41fa62f`. They are
-  not reviewed by the PHP Group. Its patches for Remi's 7.4, 8.0 and 8.1 trees
-  are not used: they replace the official fix to bring the session upload
-  progress back, which CVE-2026-115560 wants off anyway.
+  not reviewed by the PHP Group. Its patches for Remi's 7.2 to 8.1 trees are
+  not used: they bring back the session upload progress that the official
+  fix turns off, and CVE-2026-115560 wants it off anyway.
 - **php-src commits a branch never received**, in
   [`patches/compat/`](patches/compat), only where today's compilers need them:
   5.6 gets the arm64 fix of `ZEND_SIGNED_MULTIPLY_LONG` that 7.0 got in 2016.
@@ -72,7 +72,7 @@ instead of unwinding the request:
 - a request over `memory_limit` ends with the fatal error on stderr and the
   FPM worker exits: no shutdown functions, no destructors, no error page from
   the application. The web server answers 502, and FPM starts a new worker.
-- on 7.4, 8.0 and 8.1 the official fix turns the session upload progress off
+- on 7.2 to 8.1 the official fix turns the session upload progress off
   (`session.upload_progress.enabled` has no effect); on the other branches the
   community patch fixes it and keeps it working, but the image turns it off by
   default against CVE-2026-115560, which no patch fixes yet.
@@ -104,7 +104,7 @@ from 7.2 on; 2.x before, where `XDEBUG_MODE` has no effect.
 `php.ini` is `php.ini-production`, with `expose_php = Off` and
 `session.upload_progress.enabled = Off` (a mitigation PHP recommends for
 CVE-2026-115560 and CVE-2026-109619; `PHP_INI_SESSION__UPLOAD_PROGRESS__ENABLED=1`
-turns it back on before 7.4).
+turns it back on before 7.2).
 
 ## Available tags
 
