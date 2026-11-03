@@ -24,18 +24,18 @@
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-7.2-Security-backports",
-      "commit": "eb973820544967c44c6ef7de8500be9af160e153"
+      "commit": "28cff42ed5a39f88ddf5db7285607d88df697844"
     },
-    "patch": "php-7.2-enhanced-remicollet.patch",
+    "patch": null,
     "openssl": "1.1"
   },
   "7.3": {
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-7.3-security-backports",
-      "commit": "f9e099c02fc0d8c37bd538eeaf48f4e0f3671d91"
+      "commit": "15cf6860644ba512467468ffcf161baaeb431d2a"
     },
-    "patch": "php-7.3-enhanced-remicollet.patch",
+    "patch": null,
     "openssl": "1.1"
   },
   "7.4": {
