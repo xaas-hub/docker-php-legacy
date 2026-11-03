@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0](https://github.com/xaas-hub/docker-php-legacy/compare/v0.3.0...v0.4.0) (2026-11-03)
+
+### Features
+
+* add PHP 7.0 ([98f23dc](https://github.com/xaas-hub/docker-php-legacy/commit/98f23dc47b46dded8380ba0f32e3f04b8402eb36))
+
+### Bug Fixes
+
+* pick up Remi's latest backports for 7.4, 8.0 and 8.1 ([ac3fe49](https://github.com/xaas-hub/docker-php-legacy/commit/ac3fe491c4ba82bf808423a9dd91f294cf216a4b))
+* use the official php2shell fix of Remi's tree on 7.2 and 7.3 ([bef8cc4](https://github.com/xaas-hub/docker-php-legacy/commit/bef8cc4b62d6e9a8c5eb92c023eb73504895bdb2))
+
+### Documentation
+
+* mount the crontab directory for Supercronic ([d155c8a](https://github.com/xaas-hub/docker-php-legacy/commit/d155c8adefb4ea3f4fdb4aa00cb6017795d64c75))
+
 ## [0.3.0](https://github.com/xaas-hub/docker-php-legacy/compare/v0.2.1...v0.3.0) (2026-10-30)
 
 ### Features
