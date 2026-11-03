@@ -16,8 +16,7 @@ soon as the application allows.
 
 | PHP branch | Images             | Fixes                                              |
 |------------|--------------------|----------------------------------------------------|
-| 5.6, 7.1 – 8.1 | :warning:      | Remi Collet's backports, php2shell                 |
-| 7.0        | :x: not built      | no working php2shell patch yet                     |
+| 5.6 – 8.1  | :warning:          | Remi Collet's backports, php2shell                 |
 | 8.2 – 8.5  | :x: not here       | official images: [frugan/php](https://github.com/xaas-hub/docker-php) |
 
 ## Reporting a Vulnerability

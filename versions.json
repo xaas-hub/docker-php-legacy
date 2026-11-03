@@ -11,6 +11,15 @@
     ],
     "openssl": "1.1"
   },
+  "7.0": {
+    "source": {
+      "repository": "https://github.com/remicollet/php-src-security.git",
+      "branch": "PHP-7.0-security-backports",
+      "commit": "4eeb25a7ae8f91e517b760423b50a5a5ef9e98fb"
+    },
+    "patch": "php-7.0-enhanced-remicollet.patch",
+    "openssl": "1.1"
+  },
   "7.1": {
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",

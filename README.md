@@ -5,7 +5,7 @@
 
 # PHP legacy
 
-PHP 5.6 and 7.1 to 8.1, branches PHP no longer supports, patched against
+PHP 5.6 to 8.1, branches PHP no longer supports, patched against
 php2shell ([CVE-2026-109618](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w),
 [CVE-2026-109619](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp)),
 with the same runtime as [frugan/php](https://github.com/xaas-hub/docker-php):
@@ -36,6 +36,7 @@ on Debian bookworm. The source of each branch is pinned by commit in
 | 7.3 | Remi Collet's security tree               | official, in the tree                           | disabled        | 1.1.1w  |
 | 7.2 | Remi Collet's security tree               | official, in the tree                           | disabled        | 1.1.1w  |
 | 7.1 | Remi Collet's security tree               | community patch (`enhanced-remicollet`)         | works           | 1.1.1w  |
+| 7.0 | Remi Collet's security tree               | community patch (`enhanced-remicollet`)         | works           | 1.1.1w  |
 | 5.6 | Remi Collet's security tree (OpenSSL 1.1) | community patch (`enhanced-remicollet`)         | works           | 1.1.1w  |
 
 - **[remicollet/php-src-security](https://github.com/remicollet/php-src-security)**:
@@ -47,18 +48,13 @@ on Debian bookworm. The source of each branch is pinned by commit in
   life.
 - **[Anton-Barinov/php2shell-patches](https://github.com/Anton-Barinov/php2shell-patches)**:
   community backports of the fix, for the branches that have no official one.
-  [`patches/`](patches) holds verbatim copies, as of commit `41fa62f`. They are
+  [`patches/`](patches) holds verbatim copies, as of commit `e57e652`. They are
   not reviewed by the PHP Group. Its patches for Remi's 7.2 to 8.1 trees are
   not used: they bring back the session upload progress that the official
   fix turns off, and CVE-2026-115560 wants it off anyway.
 - **php-src commits a branch never received**, in
   [`patches/compat/`](patches/compat), only where today's compilers need them:
   5.6 gets the arm64 fix of `ZEND_SIGNED_MULTIPLY_LONG` that 7.0 got in 2016.
-- **7.0 is not built.** The patch for the 7.0.33 release lacks every fix
-  since December 2018. The one for Remi's 7.0 tree, as of `41fa62f`, does not
-  build there: it removes the `max_multipart_body_parts` entry from
-  `main/main.c` and adds to `main/rfc1867.c` a second copy of the code that
-  reads it, both already in the tree. 7.0 comes back once that patch builds.
 - **OpenSSL 1.1.1w**: ext/openssl only builds against OpenSSL 3 from PHP 8.1,
   so the older branches link an OpenSSL 1.1.1w built here, which no longer
   gets public fixes either. The rest of the system (curl, libpq) uses Debian's
@@ -128,7 +124,7 @@ ghcr.io/xaas-hub/php-legacy:<same>
 | `7.4-fpm-v1.2.3`   | the image as of release 1.2.3, never rebuilt                  |
 | `7.4-fpm-dev`      | the same three forms, with Xdebug                             |
 
-PHP: `5.6`, `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1`. Variants: `fpm`,
+PHP: `5.6`, `7.0`, `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1`. Variants: `fpm`,
 `cli`. Platforms: `linux/amd64`, `linux/arm64`. There is no `latest`.
 
 The rolling tags are the ones to run: a Debian security update reaches them
