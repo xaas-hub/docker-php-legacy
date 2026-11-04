@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0](https://github.com/xaas-hub/docker-php-legacy/compare/v0.4.0...v0.5.0) (2026-11-04)
+
+### Features
+
+* add subversion for Composer packages with no dist ([67f70d2](https://github.com/xaas-hub/docker-php-legacy/commit/67f70d230d20a048a251f9615aab9a917fe7eb34))
+
 ## [0.4.0](https://github.com/xaas-hub/docker-php-legacy/compare/v0.3.0...v0.4.0) (2026-11-03)
 
 ### Features
