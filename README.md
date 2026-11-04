@@ -84,7 +84,7 @@ Raise `memory_limit` where a site used to hit it.
 | [msmtp](https://marlam.de/msmtp/)                                | `sendmail_path`, configured from `MSMTP_*`                         |
 | [Supercronic](https://github.com/aptible/supercronic)            | cron for containers                                                |
 | [install-php-extensions](https://github.com/mlocati/docker-php-extension-installer) | for images built `FROM` this one                |
-| git, unzip, patch, less, curl, tzdata, locales                   | what Composer and WP-CLI expect to find                            |
+| git, subversion, unzip, patch, less, curl, tzdata, locales       | what Composer and WP-CLI expect to find                            |
 
 Extensions always enabled: bcmath, exif, gd, mysqli, opcache, pdo_mysql,
 zip, plus sodium from 7.2 on, intl from 7.4 on, and those every build of PHP

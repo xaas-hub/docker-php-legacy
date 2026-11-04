@@ -157,6 +157,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # libfcgi-bin: cgi-fcgi for the FPM healthcheck.
 # procps: pkill, to signal Supercronic next to PHP-FPM.
+# subversion: svn, for Composer packages with no dist, like the dev-trunk
+# versions of WordPress plugins, whose only source is the wordpress.org SVN.
 # util-linux: setpriv, to drop privileges without gosu.
 # hadolint ignore=DL3008
 RUN apt-get update \
@@ -171,6 +173,7 @@ RUN apt-get update \
         ncurses-bin \
         patch \
         procps \
+        subversion \
         tzdata \
         unzip \
         util-linux \
