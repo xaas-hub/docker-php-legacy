@@ -15,25 +15,25 @@
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-7.0-security-backports",
-      "commit": "4eeb25a7ae8f91e517b760423b50a5a5ef9e98fb"
+      "commit": "445f1a2f443ef90457d3abda57ef0a3eba54c8a5"
     },
-    "patch": "php-7.0-enhanced-remicollet.patch",
+    "patch": null,
     "openssl": "1.1"
   },
   "7.1": {
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-7.1-security-backports",
-      "commit": "58c39c2f8402261fd4e8ffd327c37adc53a9c861"
+      "commit": "2b199b7e3abb70d58494448c9b9908a96adc562e"
     },
-    "patch": "php-7.1-enhanced-remicollet.patch",
+    "patch": null,
     "openssl": "1.1"
   },
   "7.2": {
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-7.2-Security-backports",
-      "commit": "28cff42ed5a39f88ddf5db7285607d88df697844"
+      "commit": "e845325cd92cae71a81cfa950fa7a5e3ad96c8aa"
     },
     "patch": null,
     "openssl": "1.1"
@@ -42,7 +42,7 @@
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-7.3-security-backports",
-      "commit": "15cf6860644ba512467468ffcf161baaeb431d2a"
+      "commit": "399a749a5cb03610ddd1751150ac767b163e6368"
     },
     "patch": null,
     "openssl": "1.1"
@@ -51,7 +51,7 @@
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-7.4-security-backports",
-      "commit": "397aa202cacf70ad4e3b0bfc1618f9ccdeb335b1"
+      "commit": "34a45b97de556bf436ed41b9ae2e10004973b339"
     },
     "patch": null,
     "openssl": "1.1"
@@ -60,7 +60,7 @@
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-8.0-security-backports",
-      "commit": "f55d717e000b65890645a302f0ddde7e3cd04881"
+      "commit": "7171342a9f14026653a34e1cf6029ca46217ee19"
     },
     "patch": null,
     "openssl": "1.1"
@@ -69,7 +69,7 @@
     "source": {
       "repository": "https://github.com/remicollet/php-src-security.git",
       "branch": "PHP-8.1-security-backports",
-      "commit": "af0f042ffdae63ca55237e3d4af8bc6069b7b291"
+      "commit": "64a35bc319e15ab6a2670637bb125586d08537c1"
     },
     "patch": null,
     "openssl": "system"
