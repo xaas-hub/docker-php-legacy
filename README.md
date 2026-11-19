@@ -55,6 +55,14 @@ on Debian bookworm. The source of each branch is pinned by commit in
 - **php-src commits a branch never received**, in
   [`patches/compat/`](patches/compat), only where today's compilers need them:
   5.6 gets the arm64 fix of `ZEND_SIGNED_MULTIPLY_LONG` that 7.0 got in 2016.
+- **Our backports to 5.6**, in [`patches/backports/`](patches/backports):
+  Remi Collet's tree no longer updates 5.6, so the fixes he backported to
+  7.0 are ported here, adapted only where the 5.6 code differs, one file per
+  advisory naming the commit it comes from. They are reviewed neither by the
+  PHP Group nor by Remi Collet. They cover the fixes of PHP 8.2.36, except
+  GHSA-mmf9-xm3v-hg2x, which does not apply: 5.6 does not unfold HTTP
+  response headers. The fixes of 8.2.33 and 8.2.34, which Remi backported
+  to 7.0 but not to 5.6, are not ported yet.
 - **OpenSSL 1.1.1w**: ext/openssl only builds against OpenSSL 3 from PHP 8.1,
   so the older branches link an OpenSSL 1.1.1w built here, which no longer
   gets public fixes either. The rest of the system (curl, libpq) uses Debian's

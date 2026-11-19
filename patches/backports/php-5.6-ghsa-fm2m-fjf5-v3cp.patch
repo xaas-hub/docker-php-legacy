@@ -1,0 +1,30 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: docker-php-legacy <dev@frugan.it>
+Date: Thu, 19 Nov 2026 21:46:33 +0100
+Subject: [PATCH] Fix GHSA-fm2m-fjf5-v3cp: RCE via corrupted session file
+
+Backport of Remi Collet's d9b649452a8eb1e25bbe8c0d543b41f5a43b0b83
+on PHP-7.0-security-backports, not reviewed by the PHP Group.
+Same change, on the PS_WRITE_FUNC(files) of 5.6.
+---
+ ext/session/mod_files.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/ext/session/mod_files.c b/ext/session/mod_files.c
+index 5c69ae33..9bf4ff63 100644
+--- a/ext/session/mod_files.c
++++ b/ext/session/mod_files.c
+@@ -414,10 +414,9 @@ PS_WRITE_FUNC(files)
+ 		return FAILURE;
+ 	}
+ 
+-	/* Truncate file if the amount of new data is smaller than the existing data set. */
+-
+-	if (vallen < (int)data->st_size) {
+-		php_ignore_value(ftruncate(data->fd, 0));
++	if (ftruncate(data->fd, 0) != 0) {
++		php_error_docref(NULL TSRMLS_CC, E_WARNING, "ftruncate() failed: %s (%d)", strerror(errno), errno);
++		return FAILURE;
+ 	}
+ 
+ #if defined(HAVE_PWRITE)

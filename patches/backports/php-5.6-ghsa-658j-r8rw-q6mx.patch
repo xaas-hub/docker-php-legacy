@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: docker-php-legacy <dev@frugan.it>
+Date: Thu, 19 Nov 2026 21:46:33 +0100
+Subject: [PATCH] Fix GHSA-658j-r8rw-q6mx: session.upload_progress.enabled is
+ off by default
+
+Backport of Remi Collet's 41ebd827c1ed76b1ba7a778a019e3eff2bfcd2b2
+on PHP-7.0-security-backports, not reviewed by the PHP Group.
+Same change; the GINIT context differs because of the php2shell patch.
+The upload progress keeps working when enabled.
+---
+ ext/session/session.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ext/session/session.c b/ext/session/session.c
+index e04f7da8..788031d1 100644
+--- a/ext/session/session.c
++++ b/ext/session/session.c
+@@ -823,7 +823,7 @@ PHP_INI_BEGIN()
+ 
+ 	/* Upload progress */
+ 	STD_PHP_INI_BOOLEAN("session.upload_progress.enabled",
+-	                                                "1",     ZEND_INI_PERDIR, OnUpdateBool,        rfc1867_enabled, php_ps_globals, ps_globals)
++	                                                "0",     ZEND_INI_PERDIR, OnUpdateBool,        rfc1867_enabled, php_ps_globals, ps_globals)
+ 	STD_PHP_INI_BOOLEAN("session.upload_progress.cleanup",
+ 	                                                "1",     ZEND_INI_PERDIR, OnUpdateBool,        rfc1867_cleanup, php_ps_globals, ps_globals)
+ 	STD_PHP_INI_ENTRY("session.upload_progress.prefix",
+@@ -2469,6 +2469,7 @@ static PHP_GINIT_FUNCTION(ps) /* {{{ */
+ 	ps_globals->mod = NULL;
+ 	ps_globals->serializer = NULL;
+ 	ps_globals->mod_data = NULL;
++	ps_globals->rfc1867_enabled = 0;
+ 	ps_globals->in_rfc1867_update = 0;
+ 	ps_globals->rfc1867_decode_refused = 0;
+ 	ps_globals->session_status = php_session_none;

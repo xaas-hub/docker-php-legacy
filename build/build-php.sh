@@ -108,7 +108,7 @@ EOF
 # Leaves /usr/src/php.tar.xz, the layout docker-php-source expects: a top
 # directory and a tree ready for configure, as in a release tarball.
 prepare_source() {
-	local repository commit patch compat src=/usr/src/php-src
+	local repository commit patch compat backport src=/usr/src/php-src
 
 	repository="$(config .source.repository)"
 	commit="$(config .source.commit)"
@@ -129,6 +129,12 @@ prepare_source() {
 		[ -n "$compat" ] || continue
 		patch -d "$src" -p1 --forward --batch --fuzz=0 <"${context}/patches/compat/${compat}"
 	done < <(config '.compat[]?')
+	# Fixes of a newer branch of the same security tree, ported to a branch
+	# the tree no longer updates.
+	while IFS= read -r backport; do
+		[ -n "$backport" ] || continue
+		patch -d "$src" -p1 --forward --batch --fuzz=0 <"${context}/patches/backports/${backport}"
+	done < <(config '.backports[]?')
 
 	# Release tarballs ship the PEAR installer; without it, make install
 	# downloads it, from plain http on the 5.x branches.

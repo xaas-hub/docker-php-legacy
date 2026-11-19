@@ -9,6 +9,19 @@
     "compat": [
       "php-src-d6d4f2a-aarch64-multiply.patch"
     ],
+    "backports": [
+      "php-5.6-ghsa-3mg3-cr28-46gc.patch",
+      "php-5.6-ghsa-4646-p932-gw34.patch",
+      "php-5.6-ghsa-5j3f-64r7-f564.patch",
+      "php-5.6-ghsa-658j-r8rw-q6mx.patch",
+      "php-5.6-ghsa-68fq-fh7h-f8gr.patch",
+      "php-5.6-ghsa-f6gg-rchx-xw8j.patch",
+      "php-5.6-ghsa-fm2m-fjf5-v3cp.patch",
+      "php-5.6-ghsa-gr4f-wgx5-jpfv.patch",
+      "php-5.6-ghsa-jm4m-qfqx-967m.patch",
+      "php-5.6-ghsa-q23r-hr55-xmpg.patch",
+      "php-5.6-ghsa-qc49-hpvq-g2w6.patch"
+    ],
     "openssl": "1.1"
   },
   "7.0": {

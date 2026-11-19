@@ -8,6 +8,7 @@ Thank you for your interest in contributing!
 ├── Dockerfile                  # Compiles PHP, then targets cli, cli-dev, fpm, fpm-dev
 ├── versions.json               # Per PHP branch: source commit, patch, OpenSSL
 ├── patches/                    # Verbatim copies from Anton-Barinov/php2shell-patches
+│   ├── backports/              # Remi Collet's fixes ported to 5.6, which his tree no longer updates
 │   └── compat/                 # php-src commits a branch never received, for today's toolchains
 ├── build/
 │   ├── build-php.sh            # Fetches, patches and compiles PHP like docker-library/php
@@ -100,6 +101,11 @@ The fixes reach the images only through this repository:
   update the commit named in the README, commit as `fix(php-5.6): ...`
 - **A branch whose fix moves into Remi's tree**: drop its patch and set
   `patch` to `null`
+- **A new backport in Remi's 7.0 tree, for 5.6**: port the commit onto the
+  5.6 tree with its patch, `compat` and `backports` applied, adapting only
+  what 5.6 needs; export it with `git format-patch` without the tests into
+  `patches/backports/`, list it under `backports`, check that the whole
+  list applies with `--fuzz=0`, commit as `fix(php-5.6): ...`
 
 ## Code Style
 

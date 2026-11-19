@@ -11,15 +11,22 @@ for these branches.
 
 ## Hard rules
 
-- **No PHP code of our own.** PHP comes from the commit pinned in
-  `versions.json`, plus at most one file from `patches/` and the php-src
-  commits listed under `compat`, which `patches/compat/` holds as
-  `git format-patch` output. A fix that is not in Remi Collet's security
-  tree, in Anton-Barinov/php2shell-patches or in php-src does not belong
-  here: say so instead of writing it.
-- **`patches/` are verbatim copies** of Anton-Barinov/php2shell-patches, at
-  the commit named in the README. Never edit one: update it from upstream, and
-  check that it still applies with `--fuzz=0`.
+- **No PHP code of our own, beyond backports.** PHP comes from the commit
+  pinned in `versions.json`, plus at most one file from `patches/`, the
+  php-src commits listed under `compat`, which `patches/compat/` holds as
+  `git format-patch` output, and the files listed under `backports`.
+- **A backport is an existing fix carried to an older branch.** The files in
+  `patches/backports/` port to a branch Remi Collet's tree no longer updates
+  (5.6) a fix that is in his tree for a newer branch, adapted only where the
+  code differs: one `git format-patch` file per advisory, without the tests,
+  whose message names the commit it comes from and what was adapted. A fix
+  that is not in Remi Collet's security tree, in
+  Anton-Barinov/php2shell-patches or in php-src does not belong here: say so
+  instead of writing it.
+- **The files directly in `patches/` are verbatim copies** of
+  Anton-Barinov/php2shell-patches, at the commit named in the README. Never
+  edit one: update it from upstream, and check that it still applies with
+  `--fuzz=0`.
 - **Sources are pinned by full commit SHA**, never by branch or tag, and every
   download carries a checksum.
 - **The runtime layer follows docker-php.** `rootfs/`, the stages from `base`
